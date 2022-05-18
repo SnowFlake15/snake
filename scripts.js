@@ -1,14 +1,22 @@
 let cube = document.getElementById("cube");
-let lefttDistance = 0;
-let topDistance = 0;
+let lefttDistance =0;
+let topDistance =0;
 
-let appleLeftDistance;
-let appleTopDistance;
+let appleLeftDistance =0;
+let appleTopDistance =0;
+
+import {snakeSection} from "./snake/snakeSection.js"
+let snakeBlock = new snakeSection();
+let canvasId = document.getElementById("canvas-items")
+snakeBlock.id=canvasId
+
+let snakeBody = [0]
 
 let scoreP = document.getElementById("score");
 let canvas = document.getElementById("canvas-items")
 let apple = document.createElement("div");
 
+let paused = false
 let score = 0;
 let moveDirections = {
   moveHorizontalRight: true,
@@ -16,15 +24,32 @@ let moveDirections = {
   moveVerticalBottom: false,
   moveVerticalTop: false,
 };
+
+function pauseGame(){
+  document.addEventListener("keydown", (e) => {
+    if(e.keyCode===32){
+      if(paused===false){
+
+      }
+      console.log('game paused')
+    }
+  })
+}
+pauseGame()
+
 function move() {
-  console.log(topDistance)
-  console.log(appleTopDistance)
+  // console.log('cube',topDistance,lefttDistance);
+  // console.log(appleTopDistance)
   if (lefttDistance == appleLeftDistance && topDistance == appleTopDistance) {
-    console.log('wohoo')
+    // console.log('wohoo')
+    
+    // console.log(lefttDistance,appleLeftDistance);
+    // console.log(topDistance,appleTopDistance);
     score += 1;
     scoreP.innerText = score;
-    canvas.removeChild(apple)
-    displayApple()
+    canvas.removeChild(apple);
+    eatApple()
+    displayApple();
   }
   if (moveDirections.moveHorizontalRight == true) {
     if (lefttDistance != 270) {
@@ -52,6 +77,13 @@ function move() {
     }
   }
   
+}
+
+function eatApple(){
+  let body = snakeBody.length
+  console.log(body)
+  snakeBody.push(body)
+  console.log(snakeBody)
 }
 
 function changeDirection() {
@@ -106,20 +138,22 @@ changeDirection();
 function displayApple() {
   appleTopDistance = Math.round((Math.random() * (270 - 0) + 0) / 30) * 30;
   appleLeftDistance = Math.round((Math.random() * (270 - 0) + 0) / 30) * 30;
-
-  apple.classList.add("apple");
+  // console.log('new apple:',appleTopDistance,appleLeftDistance)
+  
   apple.style.left = `${appleLeftDistance}px`;
-  apple.style.top = `${appleLeftDistance}px`;
-  console.log(apple);
-
+  apple.style.top = `${appleTopDistance}px`;
+  // console.log(apple);
+  apple.classList.add("apple");
   canvas.appendChild(apple);
 }
 
 displayApple();
-console.log(appleLeftDistance)
-console.log(appleTopDistance)
+// console.log(appleLeftDistance)
+// console.log(appleTopDistance)
 function game() {
   scoreP.innerText = score;
+  snakeBlock.snakeList = snakeBody
+  snakeBlock.render()
   move();
 }
 
