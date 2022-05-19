@@ -1,16 +1,20 @@
-let cube = document.getElementById("cube");
+
 let lefttDistance =0;
 let topDistance =0;
 
 let appleLeftDistance =0;
 let appleTopDistance =0;
-
+let snakeBody = [[0,0]]
 import {snakeSection} from "./snake/snakeSection.js"
 let snakeBlock = new snakeSection();
 let canvasId = document.getElementById("canvas-items")
 snakeBlock.id=canvasId
-
-let snakeBody = [0]
+snakeBlock.snakeList = snakeBody
+snakeBlock.render()
+let cubeBody = document.getElementsByClassName("cube");
+console.log(cubeBody)
+cubeBody[0].setAttribute("id", "cube")
+let cubeHead = document.getElementById("cube")
 
 let scoreP = document.getElementById("score");
 let canvas = document.getElementById("canvas-items")
@@ -19,10 +23,10 @@ let apple = document.createElement("div");
 let paused = false
 let score = 0;
 let moveDirections = {
-  moveHorizontalRight: true,
-  moveHorizontalLeft: false,
-  moveVerticalBottom: false,
-  moveVerticalTop: false,
+  right: true,
+  left: false,
+  bottom: false,
+  top: false,
 };
 
 function pauseGame(){
@@ -38,41 +42,63 @@ function pauseGame(){
 pauseGame()
 
 function move() {
-  // console.log('cube',topDistance,lefttDistance);
-  // console.log(appleTopDistance)
   if (lefttDistance == appleLeftDistance && topDistance == appleTopDistance) {
-    // console.log('wohoo')
-    
-    // console.log(lefttDistance,appleLeftDistance);
-    // console.log(topDistance,appleTopDistance);
     score += 1;
     scoreP.innerText = score;
     canvas.removeChild(apple);
     eatApple()
     displayApple();
   }
-  if (moveDirections.moveHorizontalRight == true) {
-    if (lefttDistance != 270) {
+  if (moveDirections.right == true) {
+    if (snakeBody[0][0] < 270) {
       lefttDistance += 30;
-      cube.style.left = `${lefttDistance}px`;
+      for (var i = 0; i < cubeBody.length; i++) {
+        snakeBody[i][0]=snakeBody[i][0]+30
+        console.log(snakeBody[i])
+        cubeBody[i].style.left = `${snakeBody[i][0]}px`
+
+      }
+      console.log(snakeBody,cubeBody)
+      console.log('------')
     } else {
     }
-  } else if (moveDirections.moveHorizontalLeft == true) {
-    if (lefttDistance != 0) {
+  } else if (moveDirections.left == true) {
+    if (snakeBody[0][0] > 0) {
       lefttDistance -= 30;
-      cube.style.left = `${lefttDistance}px`;
+      // cubeHead.style.left=`${lefttDistance}px`
+      for (var i = 0; i < cubeBody.length; i++) {
+        // lefttDistance=lefttDistance-i*30
+        snakeBody[i][0]=snakeBody[i][0]-30
+        console.log(snakeBody[i])
+        cubeBody[i].style.left = `${snakeBody[i][0]}px`
+        // cubeBody[i].style.left = `${lefttDistance-i*30}px`;
+      }
+      console.log(snakeBody,cubeBody)
+      console.log('------')
     } else {
     }
-  } else if (moveDirections.moveVerticalBottom == true) {
-    if (topDistance != 270) {
+  } else if (moveDirections.bottom == true) {
+    if (snakeBody[0][1] < 270) {
       topDistance += 30;
-      cube.style.top = `${topDistance}px`;
+      for (var i = 0; i < cubeBody.length; i++) {
+        snakeBody[i][1]=snakeBody[i][1]+30
+        console.log(snakeBody[i])
+        cubeBody[i].style.top = `${snakeBody[i][1]}px`
+      }
+      console.log(snakeBody,cubeBody)
+      console.log('------')
     } else {
     }
-  } else if (moveDirections.moveVerticalTop == true) {
-    if (topDistance != 0) {
+  } else if (moveDirections.top == true) {
+    if (snakeBody[0][1] > 0) {
       topDistance -= 30;
-      cube.style.top = `${topDistance}px`;
+      for (var i = 0; i < cubeBody.length; i++) {
+        snakeBody[i][1]=snakeBody[i][1]-30
+        console.log(snakeBody[i])
+        cubeBody[i].style.top = `${snakeBody[i][1]}px`
+      }
+      console.log(snakeBody,cubeBody)
+      console.log('------')
     } else {
     }
   }
@@ -81,18 +107,21 @@ function move() {
 
 function eatApple(){
   let body = snakeBody.length
-  console.log(body)
-  snakeBody.push(body)
   console.log(snakeBody)
+
+  snakeBody.push([0,0])
+  console.log(snakeBody)
+  snakeBlock.snakeList = snakeBody
+  snakeBlock.render()
 }
 
 function changeDirection() {
   document.addEventListener("keydown", (e) => {
     if (e.keyCode === 37) {
-      moveDirections.moveHorizontalLeft = true;
-      moveDirections.moveHorizontalRight = false;
-      moveDirections.moveVerticalBottom = false;
-      moveDirections.moveVerticalTop = false;
+      moveDirections.left = true;
+      moveDirections.right = false;
+      moveDirections.bottom = false;
+      moveDirections.top = false;
       if (lefttDistance != 0) {
         move();
       } else {
@@ -100,10 +129,10 @@ function changeDirection() {
     }
 
     if (e.keyCode === 38) {
-      moveDirections.moveHorizontalLeft = false;
-      moveDirections.moveHorizontalRight = false;
-      moveDirections.moveVerticalBottom = false;
-      moveDirections.moveVerticalTop = true;
+      moveDirections.left = false;
+      moveDirections.right = false;
+      moveDirections.bottom = false;
+      moveDirections.top = true;
       if (topDistance != 0) {
         move();
       } else {
@@ -111,10 +140,10 @@ function changeDirection() {
     }
 
     if (e.keyCode === 39) {
-      moveDirections.moveHorizontalLeft = false;
-      moveDirections.moveHorizontalRight = true;
-      moveDirections.moveVerticalBottom = false;
-      moveDirections.moveVerticalTop = false;
+      moveDirections.left = false;
+      moveDirections.right = true;
+      moveDirections.bottom = false;
+      moveDirections.top = false;
       if (lefttDistance != 270) {
         move();
       } else {
@@ -122,10 +151,10 @@ function changeDirection() {
     }
 
     if (e.keyCode === 40) {
-      moveDirections.moveHorizontalLeft = false;
-      moveDirections.moveHorizontalRight = false;
-      moveDirections.moveVerticalBottom = true;
-      moveDirections.moveVerticalTop = false;
+      moveDirections.left = false;
+      moveDirections.right = false;
+      moveDirections.bottom = true;
+      moveDirections.top = false;
       if (topDistance != 270) {
         move();
       } else {
@@ -152,8 +181,7 @@ displayApple();
 // console.log(appleTopDistance)
 function game() {
   scoreP.innerText = score;
-  snakeBlock.snakeList = snakeBody
-  snakeBlock.render()
+ 
   move();
 }
 

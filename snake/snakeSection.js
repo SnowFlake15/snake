@@ -12,8 +12,8 @@ export class snakeSection {
     }
     
     _renderSnakeBodyPart(obj){
-        return`<div class="canvas-item" id="cube">
-
+        return`<div class="canvas-item cube" style="left:${obj[0]}" >
+        ${obj}
         </div>`
     }
     _renderSnakeBody(list){
@@ -23,6 +23,6 @@ export class snakeSection {
     }
     render(){
         let content = this._renderSnakeBody(this.snakeList)
-        this.setHtmlContent(content)
+        this.setHtmlContent = content
     }
 }
