@@ -118,7 +118,7 @@ function addNewSegment() {
   cubeSegment.classList.add("canvas-item");
   canvasId.appendChild(cubeSegment);
   // snakeBody.unshift([left, top]);
-  cubes.unshiFft(cubeSegment)
+  cubes.unshift(cubeSegment)
   // console.log(cubes)
   renderCubes()
 }
