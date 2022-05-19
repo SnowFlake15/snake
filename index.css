@@ -4,6 +4,9 @@
     position: relative;
     border: 2px solid black;
     margin: auto;
+    /* display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows:  1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; */
 }
 .canvas-item{
     width: 30px;

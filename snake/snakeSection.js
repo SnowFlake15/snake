@@ -13,7 +13,7 @@ export class snakeSection {
     
     _renderSnakeBodyPart(obj){
         return`<div class="canvas-item cube" style="left:${obj[0]}" >
-        ${obj}
+        
         </div>`
     }
     _renderSnakeBody(list){
