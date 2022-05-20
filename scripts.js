@@ -1,7 +1,6 @@
 import { snakeSection } from "./snake/snakeSection.js";
 import { appleSection } from "./apple/appleSection.js";
 import { config } from "./config/config.js"
-// let score = 0;
 
 let cubes = []
 let head;
@@ -12,14 +11,10 @@ let appleTopDistance;
 let snakeTop=0;
 let snakeLeft=0;
 
-// let direction = "right";
 let apple = document.createElement("div");
 let canvasId = document.getElementById("canvas-items");
 let snakeBlock = new snakeSection();
 snakeBlock.id = canvasId;
-// const config = {
-//   speed: 500,
-// };
 
 document.getElementById("pause").onclick=function(){
   clearInterval(move)
@@ -128,10 +123,11 @@ function addNewSegment() {
 
 
 function renderCubes(){
-
   for(let i = 0; i < cubes.length - 1; i++){
-    cubes[i].style.top=cubes[i+1].style.top
-    cubes[i].style.left=cubes[i+1].style.left
+    let top = cubes[i+1].style.top
+    let left = cubes[i+1].style.left
+    cubes[i].style.top=top
+    cubes[i].style.left=left
   }
 }
 function startGame() {
