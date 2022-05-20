@@ -7,18 +7,34 @@ let head;
 let scoreP = document.getElementById("score");
 let appleLeftDistance;
 let appleTopDistance;
-
+let start;
 let snakeTop=0;
 let snakeLeft=0;
-
+let pause = document.getElementById("pause")
+let paused = false
 let apple = document.createElement("div");
 let canvasId = document.getElementById("canvas-items");
 let snakeBlock = new snakeSection();
 snakeBlock.id = canvasId;
 
-document.getElementById("pause").onclick=function(){
-  clearInterval(move)
-  clearInterval(renderCubes)
+pause.onclick=function(){
+  console.log(paused)
+  if(paused===true){
+    start = setInterval(() => {
+      renderCubes();
+      move();
+    }, config.speed);
+    // clearInterval(start)
+    pause.textContent = "pause game"
+    paused=false
+  }else if(paused===false){
+    clearInterval(start)
+    pause.textContent = "resume game"
+    paused=true
+  }
+  console.log(paused)
+  console.log("===========")
+  // clearInterval(renderCubes)
   
 }
 function move() {
@@ -62,7 +78,7 @@ function move() {
     }
 }
 function gameOver(){
-  canvasId.innerHTML=""
+  // canvasId.innerHTML=""
 }
 
 function changeDirection() {
@@ -134,10 +150,12 @@ function startGame() {
   createSnake();
   createApple();
   changeDirection();
-  setInterval(() => {
+  start = setInterval(() => {
     renderCubes();
     move();
   }, config.speed);
+  // setInterval(renderCubes,config.speed)
+  // setInterval(move,config.speed)
   updateScore();
 }
 
