@@ -10,6 +10,7 @@ let appleTopDistance;
 let start;
 let snakeTop=0;
 let snakeLeft=0;
+let oldDirection="right";
 let pause = document.getElementById("pause")
 let paused = false
 let apple = document.createElement("div");
@@ -18,13 +19,11 @@ let snakeBlock = new snakeSection();
 snakeBlock.id = canvasId;
 
 pause.onclick=function(){
-  console.log(paused)
   if(paused===true){
     start = setInterval(() => {
       renderCubes();
       move();
     }, config.speed);
-    // clearInterval(start)
     pause.textContent = "pause game"
     paused=false
   }else if(paused===false){
@@ -32,9 +31,6 @@ pause.onclick=function(){
     pause.textContent = "resume game"
     paused=true
   }
-  console.log(paused)
-  console.log("===========")
-  // clearInterval(renderCubes)
   
 }
 function move() {
@@ -78,24 +74,26 @@ function move() {
     }
 }
 function gameOver(){
-  // canvasId.innerHTML=""
+  clearInterval(start)
 }
 
 function changeDirection() {
   document.addEventListener("keydown", (e) => {
-    if (e.keyCode === 37) {
+    oldDirection=config.direction
+    console.log(oldDirection)
+    if (e.keyCode === 37&&oldDirection!=="right") {
       config.direction = "left";
     }
 
-    if (e.keyCode === 38) {
+    if (e.keyCode === 38&&oldDirection!=="bottom") {
       config.direction = "top";
     }
 
-    if (e.keyCode === 39) {
+    if (e.keyCode === 39&&oldDirection!=="left") {
       config.direction = "right";
     }
 
-    if (e.keyCode === 40) {
+    if (e.keyCode === 40&&oldDirection!=="top") {
       config.direction = "bottom";
     }
   });
