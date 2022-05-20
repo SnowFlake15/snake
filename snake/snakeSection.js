@@ -11,18 +11,19 @@ export class snakeSection {
         this.snakeList=data
     }
     
-    _renderSnakeBodyPart(obj){
+    _renderSnake(obj){
         return`<div class="canvas-item" id="head" >
         
         </div>`
     }
     _renderSnakeBody(list){
         return list.map((obj)=>{
-            return this._renderSnakeBodyPart(obj);
+            return this._renderSnake(obj);
         }).join("");
     }
     render(){
-        let content = this._renderSnakeBody(this.snakeList)
+        // let content = this._renderSnakeBody(this.snakeList)
+        let content = this._renderSnake()
         this.setHtmlContent = content
     }
 }
