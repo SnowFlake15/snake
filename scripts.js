@@ -1,6 +1,7 @@
 import { snakeSection } from "./snake/snakeSection.js";
 import { appleSection } from "./apple/appleSection.js";
-let score = 0;
+import { config } from "./config/config.js"
+// let score = 0;
 
 let cubes = []
 let head;
@@ -11,14 +12,14 @@ let appleTopDistance;
 let snakeTop=0;
 let snakeLeft=0;
 
-let direction = "right";
+// let direction = "right";
 let apple = document.createElement("div");
 let canvasId = document.getElementById("canvas-items");
 let snakeBlock = new snakeSection();
 snakeBlock.id = canvasId;
-const config = {
-  speed: 500,
-};
+// const config = {
+//   speed: 500,
+// };
 
 document.getElementById("pause").onclick=function(){
   clearInterval(move)
@@ -35,28 +36,28 @@ function move() {
   if(snakeTop){
 
   }
-    if (direction === "right") {
+    if (config.direction === "right") {
       if (snakeLeft < 270) {
         snakeLeft+=30;
         head.style.left=`${snakeLeft}px`
       }else{
         gameOver()
       }
-    } else if (direction === "left") {
+    } else if (config.direction === "left") {
       if (snakeLeft > 0) {
         snakeLeft-=30;
         head.style.left=`${snakeLeft}px`
       }else{
         gameOver()
       }
-    } else if (direction === "top") {
+    } else if (config.direction === "top") {
       if (snakeTop> 0) {
         snakeTop-=30;
         head.style.top=`${snakeTop}px`
       }else{
         gameOver()
       }
-    } else if (direction === "bottom") {
+    } else if (config.direction === "bottom") {
       if (snakeTop < 270) {
         snakeTop+=30;
         head.style.top=`${snakeTop}px`
@@ -72,19 +73,19 @@ function gameOver(){
 function changeDirection() {
   document.addEventListener("keydown", (e) => {
     if (e.keyCode === 37) {
-      direction = "left";
+      config.direction = "left";
     }
 
     if (e.keyCode === 38) {
-      direction = "top";
+      config.direction = "top";
     }
 
     if (e.keyCode === 39) {
-      direction = "right";
+      config.direction = "right";
     }
 
     if (e.keyCode === 40) {
-      direction = "bottom";
+      config.direction = "bottom";
     }
   });
 }
@@ -106,10 +107,10 @@ function createApple() {
   canvasId.appendChild(apple);
 }
 function updateScore() {
-  scoreP.innerHTML = score;
+  scoreP.innerHTML = config.score;
 }
 function eatApple() {
-  score += 1;
+  config.score += 1;
   updateScore();
   canvasId.removeChild(apple);
   createApple();
